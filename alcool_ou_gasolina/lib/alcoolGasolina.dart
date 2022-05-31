@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_final_fields, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, prefer_final_fields, sort_child_properties_last, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -14,6 +14,38 @@ class alcoolGasolina extends StatefulWidget {
 class _alcoolGasolinaState extends State<alcoolGasolina> {
   TextEditingController _textoAlcool = TextEditingController();
   TextEditingController _textoGasolina = TextEditingController();
+  String _textoResultado = "";
+
+  void _calcular() {
+    double precoAlcool = double.parse(_textoAlcool.text);
+    double precoGasolina = double.parse(_textoGasolina.text);
+    double resultadoDivisao;
+
+    if (precoAlcool == null || precoGasolina == null) {
+      setState(() {
+        _textoResultado =
+            "Número inválido. Digite números maiores que 0 e com (.)";
+      });
+      limparCampos();
+    } else {
+      resultadoDivisao = precoAlcool / precoGasolina;
+      if (resultadoDivisao >= 0.7) {
+        setState(() {
+          _textoResultado = "É melhor abastecer com Gasolina";
+        });
+      } else {
+        setState(() {
+          _textoResultado = "É melhor abastecer com Álcool";
+        });
+      }
+      print("");
+    }
+  }
+
+  void limparCampos() {
+    _textoAlcool.text = "";
+    _textoGasolina.text = "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +104,13 @@ class _alcoolGasolinaState extends State<alcoolGasolina> {
                   padding: EdgeInsets.all(20),
                   primary: Colors.lightGreen,
                 ),
-                onPressed: () {},
+                onPressed: _calcular,
               ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: Text(
-                "Resultado",
+                _textoResultado,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
