@@ -16,12 +16,21 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tela Secundária"),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.blue,
       ),
       body: Container(
         padding: EdgeInsets.all(32),
         child: Column(
-          children: [Text("Segunda página")],
+          children: [
+            Text("Segunda página, valor passado: "),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Home"),
+              style: ElevatedButton.styleFrom(padding: EdgeInsets.all(15)),
+            )
+          ],
         ),
       ),
     );

@@ -6,6 +6,8 @@ import 'package:navegacao/telaSecundaria.dart';
 
 void main() {
   runApp(MaterialApp(
+    initialRoute: "/",
+    routes: {"/secundaria": (context) => TelaSecundaria()},
     home: telaPrincipal(),
     debugShowCheckedModeBanner: false,
   ));
@@ -32,10 +34,7 @@ class _trocaTelasState extends State<telaPrincipal> {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => TelaSecundaria())));
+                Navigator.pushNamed(context, "/secundaria");
               },
               child: Text("Ir para proxima página"),
               style: ElevatedButton.styleFrom(padding: EdgeInsets.all(15)),
