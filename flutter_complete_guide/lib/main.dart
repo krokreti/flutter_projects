@@ -15,22 +15,34 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final questions = const [
+    {
+      'questionText': 'What\'s your favorite color?',
+      'answers': ['Black', 'Red', 'Green', 'White']
+    },
+    {
+      'questionText': 'What\'s your favorite animal?',
+      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion']
+    },
+    {
+      'questionText': 'Who\'s your favorite instructor?',
+      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion']
+    },
+  ];
+
   var _questionIndex = 0;
 
   void _answerQuestion() {
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
-    print(_questionIndex);
+    if (_questionIndex < questions.length) {
+      print('there are more questions!');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-    ];
-
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
@@ -40,11 +52,13 @@ class _MyAppState extends State<MyApp> {
       body: Column(
         children: [
           Question(
-            questions.elementAt(_questionIndex),
+            // questions.elementAt(_questionIndex),
+            questions[_questionIndex]['questionText'],
           ),
-          Answer('Answer 1', _answerQuestion),
-          Answer('Answer 2', _answerQuestion),
-          Answer('Answer 3', _answerQuestion)
+          ...(questions[_questionIndex]['answers'] as List<String>)
+              .map((answer) {
+            return Answer(answer, _answerQuestion);
+          }).toList()
         ],
       ),
     ));
