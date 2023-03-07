@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
       double preco = double.parse(brl);
 
       setState(() {
-        _valorBtc = "USD " + preco.toStringAsFixed(2).toString();
+        _valorBtc = 'USD ${preco.toStringAsFixed(2).toString()}';
       });
     } else {
       throw Exception("fetching error");
@@ -40,17 +40,17 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.lightBlue,
       body: Container(
-        padding: EdgeInsets.all(32),
+        padding: const EdgeInsets.all(32),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.asset("images/cake_banner.png"),
               Padding(
-                padding: EdgeInsets.only(top: 30, bottom: 30),
+                padding: const EdgeInsets.only(top: 30, bottom: 30),
                 child: Text(
                   _valorBtc,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -59,15 +59,15 @@ class _HomeState extends State<Home> {
               ),
               ElevatedButton(
                 onPressed: _atualizarValorBtc,
-                child: Text("Atualizar"),
                 style: ElevatedButton.styleFrom(
                     primary: Colors.amber[800],
-                    fixedSize: Size(150, 50),
-                    shape: RoundedRectangleBorder(
+                    fixedSize: const Size(150, 50),
+                    shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero)),
+                child: const Text("Atualizar"),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 child: Image.asset("images/cake_logo2.png"),
               )
             ],
