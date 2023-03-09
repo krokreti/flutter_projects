@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
         MealDetailScreen.routeName: (context) => MealDetailScreen(),
       },
       // redireciona para uma página que nao está listada em routes
+      // bom para ser usado em apps que montam rotas dinamicamente
       onGenerateRoute: (settings) {
         print(settings.arguments);
         // if(settings.name == '/meal-detail') {
