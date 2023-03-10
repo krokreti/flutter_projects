@@ -21,6 +21,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _vegan = false;
   var _lactoseFree = false;
 
+  @override
+  void initState() {
+    super.initState();
+    _glutenFree = widget.filters['gluten'];
+    _vegetarian = widget.filters['vegetarian'];
+    _vegan = widget.filters['vegan'];
+    _lactoseFree = widget.filters['lactose'];
+  }
+
   Widget _buildSwitchListTile(String title, String description,
       bool currentValue, Function updateValue) {
     return SwitchListTile(
