@@ -12,10 +12,11 @@ class ProductsGrid extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
       itemCount: products.length,
-      itemBuilder: (context, index) => ProductItem(
-          id: products[index].id,
-          imageUrl: products[index].imageUrl,
-          title: products[index].title),
+      // usar o .value quando tiver provendo dados para um grid ou list, para nao causar problemas na renderização, usar so nessa situaçao
+      itemBuilder: (context, index) => ChangeNotifierProvider.value(
+        value: products[index],
+        child: ProductItem(),
+      ),
       // childAspectRatio 3/2 a altura é maior q largura, isso q significa
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
