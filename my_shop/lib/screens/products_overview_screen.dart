@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import '../screens/cart_screen.dart';
 import 'package:provider/provider.dart';
-import '../widgets/products_grid.dart';
+
 import '../providers/cart.dart';
+
+import '../screens/cart_screen.dart';
+
+import '../widgets/products_grid.dart';
+import '../widgets/app_drawer.dart';
 import '../widgets/badge.dart' as badge;
 
 enum FilterOptions { Favorites, All }
@@ -20,6 +24,15 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       appBar: AppBar(
         title: Text('MyShop'),
         actions: [
+          Consumer<Cart>(
+            builder: (context, cartData, ch) =>
+                badge.Badge(child: ch, value: cartData.itemCount.toString()),
+            child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(CartScreen.routeName);
+                },
+                icon: Icon(Icons.shopping_cart)),
+          ),
           PopupMenuButton(
             onSelected: (FilterOptions value) {
               setState(() {
@@ -42,17 +55,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               ),
             ],
           ),
-          Consumer<Cart>(
-            builder: (context, cartData, ch) =>
-                badge.Badge(child: ch, value: cartData.itemCount.toString()),
-            child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(CartScreen.routeName);
-                },
-                icon: Icon(Icons.shopping_cart)),
-          ),
         ],
       ),
+      drawer: AppDrawer(),
       body: ProductsGrid(showFavorites: _showOnlyFavorites),
     );
   }
