@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class EditProductScreen extends StatefulWidget {
+  static const routeName = '/edit-product';
   const EditProductScreen({Key key}) : super(key: key);
-
   @override
   State<EditProductScreen> createState() => _EditProductScreenState();
 }
@@ -22,6 +22,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
               TextFormField(
                 decoration: InputDecoration(label: Text('Title')),
                 textInputAction: TextInputAction.next,
+              ),
+              TextFormField(
+                decoration: InputDecoration(label: Text('Price')),
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Description'),
+                maxLines: 3,
+                keyboardType: TextInputType.multiline,
               ),
             ],
           ),
