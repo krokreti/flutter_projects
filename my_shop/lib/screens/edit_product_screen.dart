@@ -36,6 +36,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
+    final isValid = _form.currentState.validate();
+    if (!isValid) {
+      return;
+    }
     _form.currentState.save();
     print(editedProduct.title);
     print(editedProduct.price);
@@ -62,8 +66,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: ListView(
             children: [
               TextFormField(
-                decoration: InputDecoration(label: Text('Title')),
+                decoration: InputDecoration(
+                  label: Text('Title'),
+                ),
                 textInputAction: TextInputAction.next,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please, provide a value.';
+                  }
+                  return null;
+                },
                 onSaved: (newValue) {
                   editedProduct = Product(
                       id: null,
@@ -77,6 +89,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 decoration: InputDecoration(label: Text('Price')),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please, provide a price!';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Please, provide a number.';
+                  }
+                  if (double.parse(value) <= 0) {
+                    return 'Please, provide a number greater than zero.';
+                  }
+                  return null;
+                },
                 onSaved: (newValue) {
                   editedProduct = Product(
                       id: null,
@@ -90,6 +114,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please, provide a description';
+                  }
+                  if (value.length < 10) {
+                    return 'Description should be at least 10 characters long.';
+                  }
+                  return null;
+                },
                 onSaved: (newValue) {
                   editedProduct = Product(
                       id: null,
@@ -122,6 +155,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       decoration: InputDecoration(labelText: 'Image URL'),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please, provide an image URL.';
+                        }
+                        if (!value.startsWith('http') &&
+                            !value.startsWith('https')) {
+                          return 'Please, provide a valid URL.';
+                        }
+                        if (!value.endsWith('.jpg') &&
+                            !value.endsWith('.png') &&
+                            !value.endsWith('.jpeg')) {
+                          return 'Please, provide a valid image URL';
+                        }
+                        return null;
+                      },
                       controller: _imageUrlController,
                       focusNode: _imageUrlFocusNode,
                       onFieldSubmitted: (_) {
