@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       setState(() {
         selectedDate = pickedDate;
-        dateController.text = DateFormat.yMMMd().format(selectedDate);
+        dateController.text = DateFormat.yMd().format(selectedDate);
       });
     });
   }
