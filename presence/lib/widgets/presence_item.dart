@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/confirm_dialog.dart';
+
 class PresenceItem extends StatelessWidget {
   final String nome;
   final String id;
@@ -15,6 +17,16 @@ class PresenceItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey(id),
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return ConfirmDialog();
+            },
+          );
+        }
+      },
       secondaryBackground: Container(
         color: Colors.green,
         alignment: Alignment.centerRight,
@@ -31,7 +43,7 @@ class PresenceItem extends StatelessWidget {
         padding: const EdgeInsets.only(left: 20),
         margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 4),
         child: const Icon(
-          Icons.delete,
+          Icons.close,
           color: Colors.white,
         ),
       ),
@@ -41,7 +53,7 @@ class PresenceItem extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: ListTile(
             title: Text(nome),
-            leading: Text(posto),
+            leading: CircleAvatar(child: Text(posto)),
             trailing: Text(id),
           ),
         ),
