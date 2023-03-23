@@ -26,6 +26,7 @@ class PresenceItem extends StatelessWidget {
             },
           );
         }
+        return true;
       },
       secondaryBackground: Container(
         color: Colors.green,

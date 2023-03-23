@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
+import '../providers/products.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -14,12 +16,39 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
   var editedProduct =
-      Product(id: '', title: '', description: '', price: 0, imageUrl: '');
+      Product(id: null, title: '', description: '', price: 0, imageUrl: '');
+  var initValue = {
+    'title': '',
+    'description': '',
+    'price': '',
+    'imageUrl': '',
+  };
+  var isInit = true;
 
   @override
   void initState() {
     super.initState();
     _imageUrlFocusNode.addListener(_updateImageUrl);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (isInit) {
+      final productId = ModalRoute.of(context).settings.arguments as String;
+      if (productId != null) {
+        editedProduct = Provider.of<Products>(context).findById(productId);
+        initValue = {
+          'title': editedProduct.title,
+          'description': editedProduct.description,
+          'price': editedProduct.price.toString(),
+          // 'imageUrl': editedProduct.imageUrl,
+          'imageUrl': '',
+        };
+        _imageUrlController.text = editedProduct.imageUrl;
+      }
+    }
+    isInit = false;
   }
 
   @override
@@ -41,10 +70,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _form.currentState.save();
-    print(editedProduct.title);
-    print(editedProduct.price);
-    print(editedProduct.imageUrl);
-    print(editedProduct.description);
+    if (editedProduct.id != null) {
+      Provider.of<Products>(context, listen: false)
+          .updateProduct(editedProduct.id, editedProduct);
+    } else {
+      Provider.of<Products>(context, listen: false).addProduct(editedProduct);
+    }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -66,6 +98,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: ListView(
             children: [
               TextFormField(
+                initialValue: initValue['title'],
                 decoration: InputDecoration(
                   label: Text('Title'),
                 ),
@@ -78,14 +111,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
                 onSaved: (newValue) {
                   editedProduct = Product(
-                      id: null,
+                      id: editedProduct.id,
                       title: newValue,
                       description: editedProduct.description,
                       price: editedProduct.price,
-                      imageUrl: editedProduct.imageUrl);
+                      imageUrl: editedProduct.imageUrl,
+                      isFavorite: editedProduct.isFavorite);
                 },
               ),
               TextFormField(
+                initialValue: initValue['price'],
                 decoration: InputDecoration(label: Text('Price')),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
@@ -103,14 +138,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
                 onSaved: (newValue) {
                   editedProduct = Product(
-                      id: null,
+                      id: editedProduct.id,
                       title: editedProduct.title,
                       description: editedProduct.description,
                       price: double.parse(newValue),
-                      imageUrl: editedProduct.imageUrl);
+                      imageUrl: editedProduct.imageUrl,
+                      isFavorite: editedProduct.isFavorite);
                 },
               ),
               TextFormField(
+                initialValue: initValue['description'],
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
@@ -125,11 +162,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
                 onSaved: (newValue) {
                   editedProduct = Product(
-                      id: null,
+                      id: editedProduct.id,
                       title: editedProduct.title,
                       description: newValue,
                       price: editedProduct.price,
-                      imageUrl: editedProduct.imageUrl);
+                      imageUrl: editedProduct.imageUrl,
+                      isFavorite: editedProduct.isFavorite);
                 },
               ),
               Row(
@@ -180,11 +218,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       },
                       onSaved: (newValue) {
                         editedProduct = Product(
-                            id: null,
+                            id: editedProduct.id,
                             title: editedProduct.title,
                             description: editedProduct.description,
                             price: editedProduct.price,
-                            imageUrl: newValue);
+                            imageUrl: newValue,
+                            isFavorite: editedProduct.isFavorite);
                       },
                     ),
                   ),

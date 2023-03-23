@@ -13,7 +13,7 @@ class Nome {
 }
 
 const NOMES = [
-  Nome('A', id: 'a1', nome: 'Carlos'),
-  Nome('B', id: 'a2', nome: 'Cleiton'),
-  Nome('C', id: 'a3', nome: 'Claudio'),
+  Nome('3S', id: 'a1', nome: 'Carlos'),
+  Nome('2S', id: 'a2', nome: 'Cleiton'),
+  Nome('2S', id: 'a3', nome: 'Claudio'),
 ];
