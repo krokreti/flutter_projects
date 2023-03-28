@@ -69,9 +69,12 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> fetchAndSetProducts() async {
+// entre chaves o elemento é opcional
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     final url = Uri.parse(
-        'https://flutter-test-5df42-default-rtdb.firebaseio.com/products.json?auth=$authToken');
+        'https://flutter-test-5df42-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString');
     try {
       final response = await http.get(url);
       print(response);
@@ -113,6 +116,7 @@ class Products with ChangeNotifier {
               'description': product.description,
               'imageUrl': product.imageUrl,
               'price': product.price,
+              'creatorId': userId,
             }))
         .then((response) {
       print(json.decode(response.body));
