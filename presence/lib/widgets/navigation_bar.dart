@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../screens/work_call_screen.dart';
-import '../screens/presence.dart';
-
 class NavigationBar extends StatelessWidget {
   final Function onTap;
   final int selectedIndex;

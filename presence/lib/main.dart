@@ -32,9 +32,10 @@ class MyApp extends StatelessWidget {
         ),
         home: const HomeScreen(),
         routes: {
-          PresenceScreen.routeName: (context) => PresenceScreen(),
-          WorkCallScreen.routeName: (context) => WorkCallScreen(),
-          ManagePresenceScreen.routeName: (context) => ManagePresenceScreen(),
+          PresenceScreen.routeName: (context) => const PresenceScreen(),
+          WorkCallScreen.routeName: (context) => const WorkCallScreen(),
+          ManagePresenceScreen.routeName: (context) =>
+              const ManagePresenceScreen(),
         },
       ),
     );
