@@ -13,8 +13,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final dateController = TextEditingController();
-  var selectedDate = DateTime.now();
+  final _dateController = TextEditingController();
+  var _selectedDate = DateTime.now();
 
   void dateHandlerInput() {
     showDatePicker(
@@ -27,8 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return;
       }
       setState(() {
-        selectedDate = pickedDate;
-        dateController.text = DateFormat.yMd().format(selectedDate);
+        _selectedDate = pickedDate;
+        _dateController.text = DateFormat.yMd().format(_selectedDate);
       });
     });
   }
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextField(
-              controller: dateController,
+              controller: _dateController,
               decoration: const InputDecoration(
                   icon: Icon(Icons.calendar_today),
                   labelText: 'Escolha a data'),
@@ -59,7 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ModelButton(
                   title: 'Início',
                   handleClick: () {
-                    print('Início');
+                    Navigator.of(context).pushNamed(PresenceScreen.routeName,
+                        arguments: {
+                          'mode': 'Início de Expediente',
+                          'selectedDate': _selectedDate
+                        });
                   },
                 ),
               ],
@@ -71,7 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: 'Término',
                   handleClick: () {
                     Navigator.of(context).pushNamed(PresenceScreen.routeName,
-                        arguments: selectedDate);
+                        arguments: {
+                          'mode': 'Término de Expediente',
+                          'selectedDate': _selectedDate
+                        });
                   },
                 ),
               ],

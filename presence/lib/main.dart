@@ -16,9 +16,11 @@ class MyApp extends StatelessWidget {
       title: 'Presence App',
       theme: ThemeData(
         primaryColor: Colors.blue,
+        accentColor: Colors.amber,
         textTheme: const TextTheme(
-          titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
+            titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            titleMedium: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            labelMedium: TextStyle(fontSize: 17)),
       ),
       home: const HomeScreen(),
       routes: {

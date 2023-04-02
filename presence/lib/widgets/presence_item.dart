@@ -53,7 +53,7 @@ class PresenceItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: ListTile(
-            title: Text(nome),
+            title: Text(nome, style: Theme.of(context).textTheme.labelMedium),
             leading: CircleAvatar(child: Text(posto)),
             trailing: Text(id),
           ),

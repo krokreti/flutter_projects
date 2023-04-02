@@ -18,24 +18,26 @@ class _PresenceScreenState extends State<PresenceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final DateTime argument =
-    //     ModalRoute.of(context)!.settings.arguments as DateTime;
+    final argument =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
             // DateFormat.yMMMd().format(argument),
-            'teste'),
+            argument['mode']),
       ),
       body: Container(
         padding: const EdgeInsets.all(15),
         width: double.infinity,
         child: Column(
           children: [
-            Text('Teste'),
             Text(
-              // argument.toIso8601String(),
-              'teste',
+              'Lista de presença',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Text(
+              DateFormat.yMMMd().format(argument['selectedDate']),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 10),
