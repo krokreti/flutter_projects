@@ -15,6 +15,10 @@ class PresenceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void pickReason(String reason) {
+      print(reason);
+    }
+
     return Dismissible(
       key: ValueKey(id),
       confirmDismiss: (direction) async {
@@ -22,7 +26,9 @@ class PresenceItem extends StatelessWidget {
           return showDialog(
             context: context,
             builder: (BuildContext context) {
-              return ConfirmDialog();
+              return ConfirmDialog(
+                reasonHandler: pickReason,
+              );
             },
           );
         }
