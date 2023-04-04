@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../widgets/model_button.dart';
-import '../widgets/navigation_bar.dart' as bottomNavigationBar;
 import './presence.dart';
 
 class WorkCallScreen extends StatefulWidget {

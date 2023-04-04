@@ -32,6 +32,7 @@ class PresenceItem extends StatelessWidget {
             },
           );
         }
+        pickReason('Presente');
         return true;
       },
       secondaryBackground: Container(

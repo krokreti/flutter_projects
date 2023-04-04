@@ -15,6 +15,37 @@ class PresenceScreen extends StatefulWidget {
 
 class _PresenceScreenState extends State<PresenceScreen> {
   var arrayOfNames = NOMES;
+  final _filterController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // TODO: implement initState
+    _filterController.addListener(_arrayOfNamesFiltering);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _filterController.removeListener(_arrayOfNamesFiltering);
+  }
+
+  void _arrayOfNamesFiltering() {
+    if (_filterController.text.length >= 3) {
+      setState(() {
+        arrayOfNames = NOMES
+            .where((person) => person.nome
+                .toLowerCase()
+                .startsWith(_filterController.text.toLowerCase()))
+            .toList();
+        print(arrayOfNames.length);
+      });
+    } else {
+      setState(() {
+        arrayOfNames = NOMES;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +71,7 @@ class _PresenceScreenState extends State<PresenceScreen> {
               DateFormat.yMMMd().format(argument['selectedDate']),
               style: Theme.of(context).textTheme.titleLarge,
             ),
+            TextField(controller: _filterController),
             const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
