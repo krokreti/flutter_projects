@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../widgets/presence_item.dart';
+import '../models/person.dart';
 import '../data.dart';
 
 class PresenceScreen extends StatefulWidget {
@@ -15,35 +16,48 @@ class PresenceScreen extends StatefulWidget {
 
 class _PresenceScreenState extends State<PresenceScreen> {
   var arrayOfNames = NOMES;
+  List<Person> _filteredList = [];
   final _filterController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     // TODO: implement initState
-    _filterController.addListener(_arrayOfNamesFiltering);
+    // _filterController.addListener(_arrayOfNamesFiltering);
+    _filteredList.addAll(arrayOfNames);
+    _filterController.addListener(_filterList);
   }
 
   @override
   void dispose() {
     super.dispose();
-    _filterController.removeListener(_arrayOfNamesFiltering);
+    // _filterController.removeListener(_arrayOfNamesFiltering);
+    _filterController.removeListener(_filterList);
   }
 
-  void _arrayOfNamesFiltering() {
+  void _filterList() {
+    List<Person> filteredList = [];
     if (_filterController.text.length >= 3) {
-      setState(() {
-        arrayOfNames = NOMES
-            .where((person) => person.nome
-                .toLowerCase()
-                .startsWith(_filterController.text.toLowerCase()))
-            .toList();
+      arrayOfNames.forEach((name) {
+        if (name.nome
+            .toLowerCase()
+            .contains(_filterController.text.toLowerCase())) {
+          filteredList.add(name);
+        }
       });
     } else {
-      setState(() {
-        arrayOfNames = NOMES;
-      });
+      filteredList.addAll(arrayOfNames);
     }
+    setState(() {
+      _filteredList.clear();
+      _filteredList.addAll(filteredList);
+    });
+  }
+
+  void _onDismissHandler(String id) {
+    setState(() {
+      arrayOfNames.removeWhere((name) => name.id == id);
+    });
   }
 
   @override
@@ -73,19 +87,20 @@ class _PresenceScreenState extends State<PresenceScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: TextField(
-                  controller: _filterController,
-                  decoration: const InputDecoration(
-                      icon: Icon(Icons.keyboard),
-                      hintText: 'Digite para filtrar sua busca')),
+                controller: _filterController,
+                decoration: const InputDecoration(
+                    icon: Icon(Icons.keyboard),
+                    hintText: 'Digite para filtrar sua busca'),
+              ),
             ),
             const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
-                itemCount: arrayOfNames.length,
+                itemCount: _filteredList.length,
                 itemBuilder: (context, index) => PresenceItem(
-                  arrayOfNames[index].posto,
-                  id: arrayOfNames[index].id,
-                  nome: arrayOfNames[index].nome,
+                  _filteredList[index].posto,
+                  id: _filteredList[index].id,
+                  nome: _filteredList[index].nome,
                 ),
               ),
             ),

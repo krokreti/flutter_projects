@@ -32,8 +32,12 @@ class PresenceItem extends StatelessWidget {
             },
           );
         }
-        pickReason('Presente');
         return true;
+      },
+      onDismissed: (direction) {
+        if (direction == DismissDirection.endToStart) {
+          pickReason('Presente');
+        }
       },
       secondaryBackground: Container(
         color: Colors.green,
