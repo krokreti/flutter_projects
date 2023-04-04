@@ -38,7 +38,6 @@ class _PresenceScreenState extends State<PresenceScreen> {
                 .toLowerCase()
                 .startsWith(_filterController.text.toLowerCase()))
             .toList();
-        print(arrayOfNames.length);
       });
     } else {
       setState(() {
@@ -71,7 +70,14 @@ class _PresenceScreenState extends State<PresenceScreen> {
               DateFormat.yMMMd().format(argument['selectedDate']),
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            TextField(controller: _filterController),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: TextField(
+                  controller: _filterController,
+                  decoration: const InputDecoration(
+                      icon: Icon(Icons.keyboard),
+                      hintText: 'Digite para filtrar sua busca')),
+            ),
             const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
