@@ -6,17 +6,20 @@ class PresenceItem extends StatelessWidget {
   final String nome;
   final String id;
   final String posto;
+  final Function removeItem;
   const PresenceItem(
     this.posto, {
     super.key,
     required this.nome,
     required this.id,
+    required this.removeItem,
   });
 
   @override
   Widget build(BuildContext context) {
     void pickReason(String reason) {
       print(reason);
+      removeItem(id);
     }
 
     return Dismissible(

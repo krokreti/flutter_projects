@@ -16,7 +16,7 @@ class PresenceScreen extends StatefulWidget {
 
 class _PresenceScreenState extends State<PresenceScreen> {
   var arrayOfNames = NOMES;
-  List<Person> _filteredList = [];
+  final List<Person> _filteredList = [];
   final _filterController = TextEditingController();
 
   @override
@@ -56,7 +56,7 @@ class _PresenceScreenState extends State<PresenceScreen> {
 
   void _onDismissHandler(String id) {
     setState(() {
-      arrayOfNames.removeWhere((name) => name.id == id);
+      _filteredList.removeWhere((name) => name.id == id);
     });
   }
 
@@ -101,6 +101,7 @@ class _PresenceScreenState extends State<PresenceScreen> {
                   _filteredList[index].posto,
                   id: _filteredList[index].id,
                   nome: _filteredList[index].nome,
+                  removeItem: _onDismissHandler,
                 ),
               ),
             ),
